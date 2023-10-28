@@ -42,6 +42,7 @@ export const chatgptApiModelKeys = [
   'chatgptApi4_32k',
   'chatgptApi4_32k_0613',
 ]
+export const llamaCppApiModelKeys = ['llamaCppApi']
 export const customApiModelKeys = ['customModel']
 export const azureOpenAiApiModelKeys = ['azureOpenAi']
 export const claudeApiModelKeys = ['claude2Api']
@@ -109,6 +110,7 @@ export const Models = {
   poeAiWebCustom: { value: '', desc: 'Poe AI (Web, Custom)' },
   poeAiWebChatGpt: { value: 'chatgpt', desc: 'Poe AI (Web, ChatGPT)' },
   poeAiWebChatGpt_16k: { value: 'chatgpt-16k', desc: 'Poe AI (Web, ChatGPT-16k)' },
+  llamaCppApi: { value: 'llamaCppApi', desc: 'llama.cpp API' },
 }
 
 for (const modelName in Models) {
@@ -197,6 +199,7 @@ export const defaultConfig = {
     'customModel',
     'azureOpenAi',
     // 'poeAiWebCustom',
+    'llamaCppApi',
   ],
   activeSelectionTools: ['translate', 'summary', 'polish', 'code', 'ask'],
   activeSiteAdapters: [

@@ -30,6 +30,7 @@ import {
   Models,
   poeWebModelKeys,
   setUserConfig,
+  llamaCppApiModelKeys,
 } from '../config/index.mjs'
 import '../_locales/i18n'
 import { openUrl } from '../utils/open-url'
@@ -44,6 +45,7 @@ import { refreshMenu } from './menus.mjs'
 import { registerCommands } from './commands.mjs'
 import { generateAnswersWithBardWebApi } from '../services/apis/bard-web.mjs'
 import { generateAnswersWithClaudeWebApi } from '../services/apis/claude-web.mjs'
+import { generateAnswersWithLlamaCppApi } from '../services/apis/llama-cpp-api.mjs'
 
 function setPortProxy(port, proxyTabId) {
   port.proxy = Browser.tabs.connect(proxyTabId)
@@ -114,6 +116,14 @@ async function executeApi(session, port, config) {
     )
   } else if (customApiModelKeys.includes(session.modelName)) {
     await generateAnswersWithCustomApi(port, session.question, session, '', config.customModelName)
+  } else if (llamaCppApiModelKeys.includes(session.modelName)) {
+    await generateAnswersWithLlamaCppApi(
+      port,
+      session.question,
+      session,
+      '',
+      config.customModelName,
+    )
   } else if (azureOpenAiApiModelKeys.includes(session.modelName)) {
     await generateAnswersWithAzureOpenaiApi(port, session.question, session)
   } else if (claudeApiModelKeys.includes(session.modelName)) {
