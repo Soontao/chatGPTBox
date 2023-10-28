@@ -4,13 +4,20 @@ import { getConversationPairs } from '../../utils/get-conversation-pairs.mjs'
 import { isEmpty } from 'lodash-es'
 import { getCustomApiPromptBase, pushRecord, setAbortController } from './shared.mjs'
 
+// TODO: different model need different input text
+
 /**
  *
  * @param {Array} prompts
  * @returns
  */
 function format_prompt(prompts) {
-  return prompts.map((p) => `${p.role}: ${p.content}`).join('\n')
+  return (
+    '<s>' +
+    prompts
+      .map((p) => (['system', 'user'].includes(p.role) ? `[INST]${p.content}[/INST]` : p.content))
+      .join('\n')
+  )
 }
 
 /**

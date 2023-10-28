@@ -35,7 +35,7 @@ export function refreshMenu() {
       Browser.contextMenus.create({
         id: menuId + key,
         parentId: menuId,
-        title: t(desc),
+        title: t(desc) ?? menuId,
         contexts: ['selection'],
       })
     }
