@@ -12,12 +12,7 @@ import { getCustomApiPromptBase, pushRecord, setAbortController } from './shared
  * @returns
  */
 function format_prompt(prompts) {
-  return (
-    '<s>' +
-    prompts
-      .map((p) => (['system', 'user'].includes(p.role) ? `[INST]${p.content}[/INST]` : p.content))
-      .join('\n')
-  )
+  return prompts.map((p) => `${p.role}: ${p.content}`).join('\n') + 'assistant: '
 }
 
 /**
