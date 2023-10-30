@@ -180,6 +180,7 @@ export const defaultConfig = {
 
   alwaysCreateNewConversationWindow: false,
   activeApiModes: [
+    'llamaCppApi',
     // 'claude2Api',
     'chatgptFree35',
     'chatgptFree35Mobile',
@@ -199,7 +200,6 @@ export const defaultConfig = {
     'customModel',
     'azureOpenAi',
     // 'poeAiWebCustom',
-    'llamaCppApi',
   ],
   activeSelectionTools: ['translate', 'summary', 'polish', 'code', 'ask'],
   activeSiteAdapters: [
