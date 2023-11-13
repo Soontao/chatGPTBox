@@ -1,7 +1,7 @@
 import { getUserConfig } from '../../config/index.mjs'
 import { fetchSSE } from '../../utils/fetch-sse.mjs'
 import { getConversationPairs } from '../../utils/get-conversation-pairs.mjs'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, upperFirst } from 'lodash-es'
 import { getCustomApiPromptBase, pushRecord, setAbortController } from './shared.mjs'
 
 // TODO: different model need different input text
@@ -12,7 +12,10 @@ import { getCustomApiPromptBase, pushRecord, setAbortController } from './shared
  * @returns
  */
 function format_prompt(prompts) {
-  return prompts.map((p) => `<|${p.role}|>\n${p.content}</s>`).join('\n') + '<|assistant|>'
+  return (
+    prompts.map((p) => `GPT4 Correct ${upperFirst(p.role)}: ${p.content}`).join('<|end_of_turn|>') +
+    'GPT4 Correct Assistant:'
+  )
 }
 
 /**
