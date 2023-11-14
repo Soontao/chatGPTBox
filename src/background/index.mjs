@@ -117,13 +117,7 @@ async function executeApi(session, port, config) {
   } else if (customApiModelKeys.includes(session.modelName)) {
     await generateAnswersWithCustomApi(port, session.question, session, '', config.customModelName)
   } else if (llamaCppApiModelKeys.includes(session.modelName)) {
-    await generateAnswersWithLlamaCppApi(
-      port,
-      session.question,
-      session,
-      '',
-      config.customModelName,
-    )
+    await generateAnswersWithLlamaCppApi(port, session.question, session, config.modelSerial)
   } else if (azureOpenAiApiModelKeys.includes(session.modelName)) {
     await generateAnswersWithAzureOpenaiApi(port, session.question, session)
   } else if (claudeApiModelKeys.includes(session.modelName)) {

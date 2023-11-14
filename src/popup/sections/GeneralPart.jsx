@@ -8,6 +8,7 @@ import {
   isUsingCustomModel,
   isUsingCustomNameOnlyModel,
   isUsingGithubThirdPartyApi,
+  isUsingLLamaAPIModel,
   isUsingMultiModeModel,
   ModelMode,
   Models,
@@ -261,6 +262,18 @@ export function GeneralPart({ config, updateConfig }) {
               }}
             />
           )}
+          {isUsingLLamaAPIModel(config) && (
+            <input
+              type="text"
+              style="width: 50%;"
+              value={config.modelSerial}
+              placeholder={t('Model Serial')}
+              onChange={(e) => {
+                updateConfig({ modelSerial: e.target.value })
+              }}
+            />
+          )}
+
           {isUsingClaude2Api(config) && (
             <input
               type="password"

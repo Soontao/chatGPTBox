@@ -4,28 +4,21 @@ import { getConversationPairs } from '../../utils/get-conversation-pairs.mjs'
 import { isEmpty, upperFirst } from 'lodash-es'
 import { getCustomApiPromptBase, pushRecord, setAbortController } from './shared.mjs'
 
-// TODO: different model need different input text
-
-/**
- *
- * @param {Array} prompts
- * @returns
- */
-function format_prompt(prompts) {
-  return (
-    prompts.map((p) => `GPT4 Correct ${upperFirst(p.role)}: ${p.content}`).join('<|end_of_turn|>') +
-    'GPT4 Correct Assistant:'
-  )
+const MODEL_FORMATTERS = {
+  Default: (prompts) => prompts.map((p) => `${p.role}\n${p.content}`).join('\n') + '\n',
+  OpenChat: (prompts) =>
+    prompts.map((p) => `GPT4 Correct ${upperFirst(p.role)}: ${p.content}`).join('\n') +
+    'GPT4 Correct Assistant:',
+  Zephyr: (prompts) => prompts.map((p) => `<|${p.role}|>\n${p.content}`).join('\n') + '\n',
 }
 
 /**
  * @param {Browser.Runtime.Port} port
  * @param {string} question
  * @param {Session} session
- * @param {string} apiKey
- * @param {string} modelName
+ * @param {string} modelSerial
  */
-export async function generateAnswersWithLlamaCppApi(port, question, session) {
+export async function generateAnswersWithLlamaCppApi(port, question, session, modelSerial) {
   const { controller, messageListener, disconnectListener } = setAbortController(port)
 
   const config = await getUserConfig()
@@ -44,9 +37,9 @@ export async function generateAnswersWithLlamaCppApi(port, question, session) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      prompt: format_prompt(prompt),
+      prompt: (MODEL_FORMATTERS[modelSerial] ?? MODEL_FORMATTERS.Default)(prompt),
       stream: true,
-      max_tokens: config.maxResponseTokenLength,
+      n_predict: config.maxResponseTokenLength,
       temperature: config.temperature,
     }),
     /**

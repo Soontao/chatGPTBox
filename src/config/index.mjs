@@ -133,7 +133,7 @@ export const defaultConfig = {
   /** @type {keyof ThemeMode}*/
   themeMode: 'auto',
   /** @type {keyof Models}*/
-  modelName: 'chatgptFree35',
+  modelName: 'llamaCppApi',
 
   preferredLanguage: getNavigatorLanguage(),
   clickIconAction: 'popup',
@@ -160,6 +160,8 @@ export const defaultConfig = {
   customModelApiUrl: 'http://localhost:8000/chat/completions',
   customModelName: 'rwkv',
   githubThirdPartyUrl: 'http://127.0.0.1:3000/conversation',
+
+  modelSerial: 'OpenChat',
 
   // advanced
 
@@ -300,6 +302,10 @@ export function isUsingClaude2Api(configOrSession) {
 }
 export function isUsingGithubThirdPartyApi(configOrSession) {
   return githubThirdPartyApiModelKeys.includes(configOrSession.modelName)
+}
+
+export function isUsingLLamaAPIModel(configOrSession) {
+  return llamaCppApiModelKeys.includes(configOrSession.modelName)
 }
 
 export async function getPreferredLanguageKey() {
