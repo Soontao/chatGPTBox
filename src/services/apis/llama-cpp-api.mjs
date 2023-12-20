@@ -39,6 +39,7 @@ export async function generateAnswersWithLlamaCppApi(port, question, session, mo
     body: JSON.stringify({
       prompt: (MODEL_FORMATTERS[modelSerial] ?? MODEL_FORMATTERS.Default)(prompt),
       stream: true,
+      stop: ['</s>', '<|end_of_turn|>'],
       n_predict: config.maxResponseTokenLength,
       temperature: config.temperature,
     }),
