@@ -10,6 +10,14 @@ const MODEL_FORMATTERS = {
     prompts.map((p) => `GPT4 Correct ${upperFirst(p.role)}: ${p.content}`).join('\n') +
     'GPT4 Correct Assistant:',
   Zephyr: (prompts) => prompts.map((p) => `<|${p.role}|>\n${p.content}`).join('\n') + '\n',
+  Phi2: (prompts) =>
+    prompts
+      .map((p) => `${p.role == 'assistant' ? 'Output: ' : 'Instruct: '}${p.content}`)
+      .join('\n') + '\nOutput:',
+  ['open-llama-3b-v2-wizard-evol-instuct-v2']: (prompts) =>
+    prompts
+      .map((p) => `${p.role == 'assistant' ? '### RESPONSE:\n' : '### HUMAN:\n'}${p.content}`)
+      .join('\n') + '\n### RESPONSE:',
 }
 
 /**
