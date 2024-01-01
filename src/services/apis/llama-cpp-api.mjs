@@ -18,6 +18,8 @@ const MODEL_FORMATTERS = {
     prompts
       .map((p) => `${p.role == 'assistant' ? '### RESPONSE:\n' : '### HUMAN:\n'}${p.content}`)
       .join('\n') + '\n### RESPONSE:',
+  TinyLlama: (prompts) =>
+    prompts.map((p) => `<|${p.role}|>\n${p.content}</s>`).join('\n') + '<|assistant|>\n',
 }
 
 /**
