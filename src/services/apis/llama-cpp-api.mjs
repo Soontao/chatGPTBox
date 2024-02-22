@@ -12,7 +12,7 @@ const MODEL_FORMATTERS = {
   Zephyr: (prompts) => prompts.map((p) => `<|${p.role}|>\n${p.content}`).join('\n') + '\n',
   Phi2: (prompts) =>
     prompts
-      .map((p) => `${p.role == 'assistant' ? 'Output: ' : 'Instruct: '}${p.content}`)
+      .map((p) => `${p.role == 'assistant' ? 'Output:' : 'Instruct: '}${p.content}`)
       .join('\n') + '\nOutput:',
   ['open-llama-3b-v2-wizard-evol-instuct-v2']: (prompts) =>
     prompts
